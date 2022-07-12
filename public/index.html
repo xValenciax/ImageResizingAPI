@@ -25,27 +25,43 @@
                 <ul class="nav-menu">
                     <li class="nav-ele">
                         <a class="nav-link" href="">
-                            <img class="nav-img" src="assets/icons/icons8-home-64.png" alt="Home Icon">
+                            <img class="nav-img off" src="assets/icons/icons8-home-64.png" alt="Home Icon">
                         </a>
                     </li>
                     <li class="nav-ele">
                         <a class="nav-link" href="">
-                            <img class="nav-img" src="assets/icons/icons8-image-64.png" alt="Home Icon">
+                            <img class="nav-img off" src="assets/icons/icons8-about-64.png" alt="Home Icon">
                             </a>
                     </li>
                     <li class="nav-ele">
                         <a class="nav-link" href="">
-                            <img class="nav-img" src="assets/icons/icons8-about-64.png" alt="Home Icon">
+                            <img class="nav-img" id="menu" src="assets/icons/icons8-menu-50.png" alt="Home Icon">
                         </a>
                     </li>
                 </ul>
             </header>
 
             <main class="content">
+
                 <div class="image-container">
                     <h2>Display Area</h2>
-                    <img src="" alt="user's processed image">
                 </div>
+
+                <form class="form">
+                    <label for="img">Choose an Image</label>
+                    <input type="file" name="image" id="img" value="" required
+                    accept="image/jpeg, image/jpg">
+                    
+                    <div class="resize">
+                        <label for="width">Width</label>
+                        <input type="text" name="width" id="width"   value="" required placeholder="in pixels">
+                        <label for="height">Height</label>
+                        <input type="text" name="height" id="height" value="" required placeholder="in pixels">
+                    </div>
+
+                    <button id="viewimg">view resized image</button>
+                </form>
+
             </main>
 
             <footer class="footer">
