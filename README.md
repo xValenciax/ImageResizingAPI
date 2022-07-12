@@ -1,2 +1,1 @@
-# ImageProcessingAPI
 # ImageResizingAPI
