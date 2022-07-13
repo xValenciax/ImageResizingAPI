@@ -29,6 +29,6 @@ viewimg.addEventListener('click', (e) => {
     height = document.querySelector('#height').value;
 
     window.open(
-        `http://localhost:3000/api/${img}/${width}/${height}`
+        `http://localhost:3000/api?image=${img}&width=${width}&height=${height}`
     );
 });

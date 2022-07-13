@@ -6,7 +6,8 @@ const resize = async (inp: string, width: number,
     
     const res = await sharp(inp)
         .resize(width, height)
-        .toFile(path.join(`${out}/${image}`));
+        .toFile(path.join(`${out}/${width}x${height}${image}`));
+    return;
 };
 
 export default resize;
