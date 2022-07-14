@@ -3,11 +3,12 @@ import resize from '../../utils/resize';
 import path from 'path';
 import { readFile as read, writeFile as write }
     from '../../utils/storage';
+import { ServerResponse, STATUS_CODES } from 'http';
 
 const api = express.Router();
 
 
-api.get('/api', (req, res): void => {
+api.get('/api', (req, res): ServerResponse => {
 
     const inp =
         path.join(
@@ -21,7 +22,6 @@ api.get('/api', (req, res): void => {
 
     const showImg = async (): Promise<void> => {
         const data = (await read()).split('\n');
-        
         for (const line of data) {
             if (line === `${out}/${width}x${height}${req.query.image}`) {
                 res.sendFile(line);
@@ -35,9 +35,12 @@ api.get('/api', (req, res): void => {
             ));
         
         write(`${out}/${width}x${height}${req.query.image}`);
+        
     };
 
     showImg();
+
+    return res;
 });
 
 export default api;

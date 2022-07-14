@@ -2,12 +2,15 @@ import path from 'path';
 import sharp from 'sharp';
 
 const resize = async (inp: string, width: number,
-    height: number, out: string, image: string): Promise<void> => {
+    height: number, out: string, image: string): Promise<string> => {
     
     const res = await sharp(inp)
         .resize(width, height)
-        .toFile(path.join(`${out}/${width}x${height}${image}`));
-    return;
+        .toFile(path.join(`${out}/${width}x${height}${image}`))
+        .then((data) => {
+            return JSON.stringify(data);
+        });
+    return res;
 };
 
 export default resize;

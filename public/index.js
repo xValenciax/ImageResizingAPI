@@ -13,7 +13,6 @@ menu.addEventListener('click', (e) => {
 
 let img = '';
 const uploadedImg = document.querySelector('input[type="file"]');
-const path = 'D:/Courses/FWD Advanced Track/firstProject/public/assets/images/';
 
 uploadedImg.addEventListener('change', (e) => {
     img = e.target.files[0].name;
@@ -24,7 +23,7 @@ const viewimg = document.querySelector('#viewimg');
 let width = 0;
 let height = 0;
 
-viewimg.addEventListener('click', (e) => {
+viewimg.addEventListener('click', () => {
     width = document.querySelector('#width').value;
     height = document.querySelector('#height').value;
 

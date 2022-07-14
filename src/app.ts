@@ -17,3 +17,5 @@ app.listen(port, () => {
 app.use(express.static(
     'D:/Courses/FWD Advanced Track/firstProject/public'
 ));
+
+export default app;

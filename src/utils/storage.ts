@@ -3,6 +3,7 @@ import { FileHandle } from 'fs/promises';
 
 export const openFile = async (): Promise<FileHandle> => {
     const myFile = await fs.open('cache.txt', 'a+');
+    console.log(JSON.stringify(myFile));
     return myFile;
 };
 
