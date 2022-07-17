@@ -133,6 +133,8 @@ To get started you need node.js installed on your own system:
 ![Product Name Screen Shot](./public/assets/icons/Screenshot_1.png)
 
 this is a descriptive screeshot that shows how to interact with the home page
+#### hint: images should always exist in this path `./public/assets/full` in order to be successfully accessed. you could either add them manually or upload them via the API
+
 
 _For more examples, please refer to the [Documentation](https://github.com/xValenciax/ImageResizingAPI)_
 
