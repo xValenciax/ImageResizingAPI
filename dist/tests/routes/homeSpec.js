@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../../app"));
 const request = (0, supertest_1.default)(app_1.default);
-fdescribe('GET /public', () => {
+describe('GET /public', () => {
     it('expect /public route to respond with status 200', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/public');
         expect(response.statusCode).toEqual(200);

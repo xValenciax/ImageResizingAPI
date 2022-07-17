@@ -26,17 +26,30 @@ api.get('/api', (req, res) => {
     const height = parseInt(req.query.height);
     const showImg = () => __awaiter(void 0, void 0, void 0, function* () {
         const data = (yield (0, storage_1.readFile)()).split('\n');
-        for (const line of data) {
-            if (line === `${out}/${width}x${height}${req.query.image}`) {
-                res.sendFile(line);
-                return;
+        try {
+            console.log('inside try');
+            for (const line of data) {
+                if (line === `${out}/${width}x${height}${req.query.image}`) {
+                    res.sendFile(line);
+                    return;
+                }
             }
         }
-        (0, resize_1.default)(inp, width, height, out, req.query.image)
-            .then(() => res.sendFile(`${out}/${width}x${height}${req.query.image}`));
-        (0, storage_1.writeFile)(`${out}/${width}x${height}${req.query.image}`);
+        catch (err) {
+            console.log('inside catch');
+            res.send('input error' + err);
+        }
+        try {
+            console.log('inside the other try');
+            (0, resize_1.default)(inp, width, height, out, req.query.image)
+                .then(() => res.sendFile(`${out}/${width}x${height}${req.query.image}`));
+            (0, storage_1.writeFile)(`${out}/${width}x${height}${req.query.image}`);
+        }
+        catch (err) {
+            console.log('inside the other catch catch');
+            res.send(err);
+        }
     });
     showImg();
-    return res;
 });
 exports.default = api;

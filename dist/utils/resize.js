@@ -15,12 +15,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const sharp_1 = __importDefault(require("sharp"));
 const resize = (inp, width, height, out, image) => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield (0, sharp_1.default)(inp)
-        .resize(width, height)
-        .toFile(path_1.default.join(`${out}/${width}x${height}${image}`))
-        .then((data) => {
-        return JSON.stringify(data);
-    });
-    return res;
+    try {
+        console.log('inside resize try');
+        const res = yield (0, sharp_1.default)(inp)
+            .resize(width, height)
+            .toFile(path_1.default.join(`${out}/${width}x${height}${image}`))
+            .then((data) => {
+            return JSON.stringify(data);
+        });
+        return res;
+    }
+    catch (err) {
+        console.log('inside resize catch');
+        if (typeof err === 'string') {
+            err.toUpperCase(); // works, `e` narrowed to string
+            throw new Error(err.toString());
+        }
+        else if (err instanceof Error) {
+            err.message; // works, `e` narrowed to Error
+            throw err.message;
+        }
+    }
+    return '';
 });
 exports.default = resize;

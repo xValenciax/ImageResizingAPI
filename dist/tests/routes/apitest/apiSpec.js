@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("../../../app"));
 const supertest_1 = __importDefault(require("supertest"));
 const request = (0, supertest_1.default)(app_1.default);
-fdescribe('Api Endpoint test', () => {
+describe('Api Endpoint test', () => {
     const query = '?image=encenadaport.jpg&width=200&height=200';
-    it('Expects response status for this route to be 200', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('expects /api route to respond with status 200', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get(`/api${query}`);
         expect(response.statusCode).toEqual(200);
     }));
