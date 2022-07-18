@@ -21,10 +21,10 @@
             "ignoreImports": true,
             "ignoreGlobals": true
         }],
-        "indent": ["error"],
-        "max-len": ["error"],
-        "no-multi-spaces": ["error"],
-        "no-multiple-empty-lines": ["error"],
+        "indent": [1],
+        "max-len": [1],
+        "no-multi-spaces": [2],
+        "no-multiple-empty-lines": [2],
         "quotes": ["error", "single", {
             "allowTemplateLiterals": true
         }],

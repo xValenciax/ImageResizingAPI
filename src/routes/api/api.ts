@@ -1,47 +1,45 @@
 import express from 'express';
 import resize from '../../utils/resize';
 import path from 'path';
-import { readFile as read, writeFile as write }
-    from '../../utils/storage';
+import { readFile as read, writeFile as write } from '../../utils/storage';
 
 const api = express.Router();
 
 /*
-*   @description a get route for the api
-*   @param { Request } req - HTTP request sent to the route 
-*   @param { Response } res - HTTP response sent back from the route 
-*   @returns { void }
-*/
+ *   @description a get route for the api
+ *   @param { Request } req - HTTP request sent to the route
+ *   @param { Response } res - HTTP response sent back from the route
+ *   @returns { void }
+ */
 api.get('/api', (req: express.Request, res: express.Response): void => {
-    
     // resized image width & heigth
     const width = parseInt(req.query.width as string);
     const height = parseInt(req.query.height as string);
 
-    if (typeof req.query.image != 'string'
-        || width <= 0 || height <= 0) {
+    if (
+        typeof req.query.image != 'string' ||
+    width <= 0 ||
+    height <= 0 ||
+    isNaN(width) ||
+    isNaN(height)
+    ) {
         res.status(400).send(
             `<h2>Invalid Input data!</h2>
-            <p>Please make sure that you've entered the values and
-             image name correctly</p>
-             <p>or chech if the image you've entered actually exists in 
+            <p>Please make sure that you've entered the width and heigth
+             as numbers and image name correctly</p>
+             <p>or check if the image you've entered actually exists in 
              './public/assets/full'</p>`
         );
-    }
-    
-    else {
+    } else {
         console.log('insinde api else');
         // path of the input image normalized to fit in different OS's
         const inp = path.normalize(
             path.resolve(`public/assets/full/${req.query.image}`)
         );
 
-        // path of the output image normalized 
-        const out = path.normalize(
-            path.resolve(`public/assets/thumbs`)
-        );
-        
-        
+        // path of the output image normalized
+        const out = path.normalize(path.resolve(`public/assets/thumbs`));
+
         /*
         *   @description an async function 
             that displays images after being resized
@@ -64,10 +62,9 @@ api.get('/api', (req: express.Request, res: express.Response): void => {
             }
 
             // if the image hasn't been processed before
-            // resize it then output it the thumbs folder 
+            // resize it then output it the thumbs folder
             // and save its path in the cache file
-            resize(inp, width, height, out,
-                req.query.image as string)
+            resize(inp, width, height, out, req.query.image as string)
                 .then((data) => {
                     if (data instanceof Error) {
                         res.status(400).send(
@@ -78,18 +75,20 @@ api.get('/api', (req: express.Request, res: express.Response): void => {
                             exist in this path './public/assets/full'</p>`
                         );
                         return new Error('Error');
-                    }
-                    else {
-                        res.status(200).sendFile(
-                            `${out}/${width}x${height}-${req.query.image}`
-                        );
+                    } else {
+                        res
+                            .status(200)
+                            .sendFile(
+                                `${out}/${width}x${height}-${req.query.image}`
+                            );
                     }
                 })
                 .then((data) => {
-                    if(!(data instanceof Error)){
-                        write(path.normalize(
-                            `${width}x${height}-${req.query.image}`
-                        ));
+                    if (!(data instanceof Error)) {
+                        write(
+                            path.normalize(
+                                `${width}x${height}-${req.query.image}`
+                            ));
                     }
                 });
         };

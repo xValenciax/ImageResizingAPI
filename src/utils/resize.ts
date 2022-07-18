@@ -1,7 +1,6 @@
 import path from 'path';
 import sharp from 'sharp';
 
-
 /*
 *   @description an async function that resizes an image to a specified size
 *   @param { string } inp - path of the input image file
@@ -12,10 +11,14 @@ import sharp from 'sharp';
 *   @returns { Promise<string> } promise of type string returned 
     from sharp function
 */
-const resize = async (inp: string, width: number,
-    height: number, out: string, image: string):(Promise<string|Error>) => {
-    
-    try{
+const resize = async (
+    inp: string,
+    width: number,
+    height: number,
+    out: string,
+    image: string
+): Promise<string | Error> => {
+    try {
         const res = await sharp(inp)
             .resize(width, height)
             .toFile(path.join(`${out}/${width}x${height}-${image}`))
@@ -23,13 +26,11 @@ const resize = async (inp: string, width: number,
                 return JSON.stringify(data);
             });
         return res;
-    }
-
-    catch (err: unknown) {
+    } catch (err: unknown) {
         if (err instanceof Error) {
             return err;
         }
-    }   
+    }
     return '';
 };
 

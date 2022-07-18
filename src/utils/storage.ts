@@ -12,25 +12,21 @@ export const openFile = async (): Promise<FileHandle> => {
     return myFile;
 };
 
-
 /*
 *   @description an async function that write data in storage file
 *   @param { string } data - input data that should be written into storage file
 *   @returns { Promise<void> } promise of type void indicates
      that the function returns none
 */
-export const writeFile = async (data: string): Promise<void|Error> => {
+export const writeFile = async (data: string): Promise<void | Error> => {
     try {
         const myFile = await openFile();
         myFile.write(`${data}\n`);
         myFile.close();
-    }
-    catch (err) {
-        if (err instanceof Error)
-            throw new Error(err.message);
+    } catch (err) {
+        if (err instanceof Error) throw new Error(err.message);
     }
 };
-
 
 /*
 *   @description an async function that reads data from a file

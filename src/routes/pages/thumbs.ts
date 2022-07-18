@@ -1,21 +1,19 @@
 /* eslint-disable max-len */
 import express from 'express';
 import path from 'path';
-import { promises as fs} from 'fs';
+import { promises as fs } from 'fs';
 
 const thumbs = express.Router();
 
-
 /*
-*   @description a get route that opens the page where all processed images are displayed
-*   @param { Request } req - HTTP request sent to the route 
-*   @param { Response } res - HTTP response sent back from the route 
-*   @returns { void }
-*/
+ *   @description a get route that opens the page where all processed images are displayed
+ *   @param { Request } req - HTTP request sent to the route
+ *   @param { Response } res - HTTP response sent back from the route
+ *   @returns { void }
+ */
 thumbs.get('/thumbs', (req: express.Request, res: express.Response): void => {
     // html response returned by the route
-    let HTMLresponse = 
-    `<!DOCTYPE html>
+    let HTMLresponse = `<!DOCTYPE html>
         <html>
             <head>
                 <meta charset="utf-8">
@@ -58,24 +56,21 @@ thumbs.get('/thumbs', (req: express.Request, res: express.Response): void => {
                     </header>
                     <main class="content gallery">`;
 
-    
     /*
-    *   @description an async function that displays images found in thumbs folder
-    *   @param { void }
-    *   @returns { Promise<void> } promise of type void indicates that the file's been opened successfully
-    */
+   *   @description an async function that displays images found in thumbs folder
+   *   @param { void }
+   *   @returns { Promise<void> } promise of type void indicates that the file's been opened successfully
+   */
     const getImages = async (): Promise<void> => {
-        // open the cache file and read its content
+    // open the cache file and read its content
         const data = await fs.readFile(
-            path.normalize(
-                path.resolve('cache.txt')
-            ), 'utf-8');
-        
+            path.normalize(path.resolve('cache.txt')),
+            'utf-8'
+        );
+
         if (data === '' || data === undefined || data === null) {
             HTMLresponse += `<h3>There is no images currently that has been processed</h3>`;
-        }
-        
-        else {
+        } else {
             // split returned data into an array of strings
             const Data = data.split('\n');
             // loop over cache data
@@ -87,11 +82,13 @@ thumbs.get('/thumbs', (req: express.Request, res: express.Response): void => {
                     const imgName = dir.split('x')[1].split('-')[1];
                     const width = dir.split('x')[0];
                     const height = dir.split('x')[1].split('-')[0];
-                    const card =
-                        `<div class="card">
+                    const card = `<div class="card">
                         <img class="cardImg" src="./assets/thumbs/${dir}" alt="test image" width="200" height="200">
                         <div class="imgDesc">
-                            <h4><b>${imgName.replace('.jpg', '')} (${width}x${height})</b></h4>
+                            <h4><b>${imgName.replace(
+        '.jpg',
+        ''
+    )} (${width}x${height})</b></h4>
                             <p>
                                 <a class="imglink" target="_blank" onclick="copyToClipboard()"
                                 href="http://localhost:3000/api?image=${imgName}&width=${width}&height=${height}">
@@ -104,8 +101,7 @@ thumbs.get('/thumbs', (req: express.Request, res: express.Response): void => {
                 }
             }
         }
-        const responseTail = 
-            `</main>
+        const responseTail = `</main>
                 <footer class="footer">
                     <p>&copy; SELIM</p>
                     <p></p>
@@ -118,7 +114,7 @@ thumbs.get('/thumbs', (req: express.Request, res: express.Response): void => {
 
         res.status(200).send(HTMLresponse);
     };
-    
+
     getImages();
 });
 

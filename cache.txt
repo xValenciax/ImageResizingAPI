@@ -6,3 +6,4 @@ This is A fake input for test purposes
 100
 This is A fake input for test purposes
 100
+300x300-encenadaport.jpg

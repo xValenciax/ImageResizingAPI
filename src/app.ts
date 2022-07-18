@@ -20,11 +20,5 @@ app.listen(port, (): void => {
 });
 
 // use static directory 'public' that contains all frontend files
-app.use(
-    express.static(
-        path.normalize(
-            path.resolve('./public')
-        )
-    )
-);
+app.use(express.static(path.normalize(path.resolve('./public'))));
 export default app;
