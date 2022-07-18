@@ -1,15 +1,30 @@
 /* eslint-disable max-len */
 import resize from '../../utils/resize';
+import path from 'path';
 
-const inp = 
-`D:/Courses/FWD Advanced Track/firstProject/public/assets/full/palmtunnel.jpg`;
-const out =
-        `D:/Courses/FWD Advanced Track/firstProject/public/assets/thumbs`;
+const inp = path.normalize(
+    path.resolve(`public/assets/full/palmtunnel.jpg`)
+);
+
+// path of the output image normalized 
+const out = path.normalize(
+    path.resolve(`public/assets/thumbs`)
+);
+
+const fakeInp = path.normalize(
+    path.resolve(`public/assets/full/palmtunne.jpg`)
+);
         
-describe('Endpoint test for Home Route', () => {
+describe('test for resize process', () => {
     it('expect size of resized image to be as specified in input',
         async () => {
             const returnedData = await resize(inp, 200, 200, out, 'palmtunnel.jpg');
             expect(returnedData).toContain('"width":200');
+        });
+    
+    it('expect function to return an error',
+        async () => {
+            expect(await resize(fakeInp, 200, 200, out, 'palmtunnel.jpg'))
+                .toThrowError;
         });
 });

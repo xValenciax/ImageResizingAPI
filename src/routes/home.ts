@@ -11,8 +11,8 @@ const home = express.Router();
 *   @param { Response } res - HTTP response sent back from the route 
 *   @returns { void }
 */
-home.get('/public', (req, res): void => {
-    res.sendFile(
+home.get('/public', (req: express.Request, res: express.Response): void => {
+    res.status(200).sendFile(
         path.normalize(
             path.resolve('public/index.html')
         )

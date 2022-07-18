@@ -12,7 +12,7 @@ const thumbs = express.Router();
 *   @param { Response } res - HTTP response sent back from the route 
 *   @returns { void }
 */
-thumbs.get('/thumbs', (req, res): void => {
+thumbs.get('/thumbs', (req: express.Request, res: express.Response): void => {
     // html response returned by the route
     let HTMLresponse = 
     `<!DOCTYPE html>
@@ -71,32 +71,37 @@ thumbs.get('/thumbs', (req, res): void => {
                 path.resolve('cache.txt')
             ), 'utf-8');
         
-        // split returned data into an array of strings
-        const Data = data.split('\n');
-
-        // loop over cache data
-        // convert each image into an html card
-        // append the card to the HTML response
-        // returned later by the route
-        for (const dir of Data) {
-            if (dir != '') {
-                const imgName = dir.split('x')[1].split('-')[1];
-                const width = dir.split('x')[0];
-                const height = dir.split('x')[1].split('-')[0];
-                const card =
-                `<div class="card">
-                    <img class="cardImg" src="./assets/thumbs/${dir}" alt="test image" width="200" height="200">
-                    <div class="imgDesc">
-                        <h4><b>${imgName.replace('.jpg', '')} (${width}x${height})</b></h4>
-                        <p>
-                            <a class="imglink" target="_blank" onclick="copyToClipboard()"
-                            href="http://localhost:3000/api?image=${imgName}&width=${width}&height=${height}">
-                                get link
-                            </a>
-                        </p>
-                    </div>
-                </div>`;
-                HTMLresponse += card;
+        if (data === '' || data === undefined || data === null) {
+            HTMLresponse += `<h3>There is no images currently that has been processed</h3>`;
+        }
+        
+        else {
+            // split returned data into an array of strings
+            const Data = data.split('\n');
+            // loop over cache data
+            // convert each image into an html card
+            // append the card to the HTML response
+            // returned later by the route
+            for (const dir of Data) {
+                if (dir != '') {
+                    const imgName = dir.split('x')[1].split('-')[1];
+                    const width = dir.split('x')[0];
+                    const height = dir.split('x')[1].split('-')[0];
+                    const card =
+                        `<div class="card">
+                        <img class="cardImg" src="./assets/thumbs/${dir}" alt="test image" width="200" height="200">
+                        <div class="imgDesc">
+                            <h4><b>${imgName.replace('.jpg', '')} (${width}x${height})</b></h4>
+                            <p>
+                                <a class="imglink" target="_blank" onclick="copyToClipboard()"
+                                href="http://localhost:3000/api?image=${imgName}&width=${width}&height=${height}">
+                                    get link
+                                </a>
+                            </p>
+                        </div>
+                    </div>`;
+                    HTMLresponse += card;
+                }
             }
         }
         const responseTail = 
@@ -111,7 +116,7 @@ thumbs.get('/thumbs', (req, res): void => {
             </html>`;
         HTMLresponse += responseTail;
 
-        res.send(HTMLresponse);
+        res.status(200).send(HTMLresponse);
     };
     
     getImages();

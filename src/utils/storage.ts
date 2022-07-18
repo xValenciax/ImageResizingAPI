@@ -9,7 +9,6 @@ import { FileHandle } from 'fs/promises';
 */
 export const openFile = async (): Promise<FileHandle> => {
     const myFile = await fs.open('cache.txt', 'a+');
-    console.log(JSON.stringify(myFile));
     return myFile;
 };
 
@@ -20,10 +19,16 @@ export const openFile = async (): Promise<FileHandle> => {
 *   @returns { Promise<void> } promise of type void indicates
      that the function returns none
 */
-export const writeFile = async (data: string): Promise<void> => {
-    const myFile = await openFile();
-    myFile.write(`${data}\n`);
-    myFile.close();
+export const writeFile = async (data: string): Promise<void|Error> => {
+    try {
+        const myFile = await openFile();
+        myFile.write(`${data}\n`);
+        myFile.close();
+    }
+    catch (err) {
+        if (err instanceof Error)
+            throw new Error(err.message);
+    }
 };
 
 

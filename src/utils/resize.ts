@@ -13,7 +13,7 @@ import sharp from 'sharp';
     from sharp function
 */
 const resize = async (inp: string, width: number,
-    height: number, out: string, image: string): Promise<string> => {
+    height: number, out: string, image: string):(Promise<string|Error>) => {
     
     try{
         const res = await sharp(inp)
@@ -26,13 +26,10 @@ const resize = async (inp: string, width: number,
     }
 
     catch (err: unknown) {
-        if (typeof err === 'string') {
-            err.toUpperCase();
-            throw new Error(err.toString());
-        } else if (err instanceof Error) {
-            throw err.message;
+        if (err instanceof Error) {
+            return err;
         }
-    }
+    }   
     return '';
 };
 

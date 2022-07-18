@@ -16,4 +16,7 @@ describe('test for storage util', () => {
         const data = (yield (0, storage_1.readFile)()).split('\n');
         expect(data).toContain('This is A fake input for test purposes');
     }));
+    it('Expect writeFile to return an error', () => __awaiter(void 0, void 0, void 0, function* () {
+        expect((0, storage_1.writeFile)(100)).toThrowError;
+    }));
 });

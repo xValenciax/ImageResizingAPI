@@ -7,4 +7,7 @@ describe('test for storage util', () => {
         const data = (await readFile()).split('\n');
         expect(data).toContain('This is A fake input for test purposes');
     });
+    it('Expect writeFile to return an error', async () => {
+        expect(writeFile((100 as unknown) as string)).toThrowError;
+    });
 });

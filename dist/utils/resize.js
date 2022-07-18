@@ -14,26 +14,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const sharp_1 = __importDefault(require("sharp"));
+/*
+*   @description an async function that resizes an image to a specified size
+*   @param { string } inp - path of the input image file
+*   @param { number } width - width of the input image file
+*   @param { number } height - height of the input image file
+*   @param { string } out - path of the destination output folder
+*   @param { string } image - filename of the image with the file extenstion
+*   @returns { Promise<string> } promise of type string returned
+    from sharp function
+*/
 const resize = (inp, width, height, out, image) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log('inside resize try');
         const res = yield (0, sharp_1.default)(inp)
             .resize(width, height)
-            .toFile(path_1.default.join(`${out}/${width}x${height}${image}`))
+            .toFile(path_1.default.join(`${out}/${width}x${height}-${image}`))
             .then((data) => {
             return JSON.stringify(data);
         });
         return res;
     }
     catch (err) {
-        console.log('inside resize catch');
-        if (typeof err === 'string') {
-            err.toUpperCase(); // works, `e` narrowed to string
-            throw new Error(err.toString());
-        }
-        else if (err instanceof Error) {
-            err.message; // works, `e` narrowed to Error
-            throw err.message;
+        console.log('inside resize util catch');
+        if (err instanceof Error) {
+            return err;
         }
     }
     return '';

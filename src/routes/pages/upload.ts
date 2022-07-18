@@ -4,12 +4,15 @@ import path from 'path';
 
 // use multer to save uploaded images to a specific folder
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: (req: express.Request, file: Express.Multer.File,
+        cb: ((error: Error | null, destination: string) => void)): void => {
+        
         cb(null, path.normalize(
             path.resolve(`public/assets/full`)
         ));
     },
-    filename: (req, file, cb) => {
+    filename: (req: express.Request, file: Express.Multer.File, 
+        cb: ((error: Error|null, destination: string) => void)): void => {
         cb(null, file.originalname);
     }
 });
@@ -25,8 +28,8 @@ const upload = express.Router();
 *   @param { Response } res - HTTP response sent back from the route 
 *   @returns { void }
 */
-upload.get('/upload', (req, res): void => {
-    res.sendFile(
+upload.get('/upload', (req: express.Request, res: express.Response): void => {
+    res.status(200).sendFile(
         path.normalize(
             path.resolve('public/upload.html')
         )
