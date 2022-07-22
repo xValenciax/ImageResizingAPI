@@ -113,7 +113,7 @@ To get started you need node.js installed on your own system:
    ```
 2. Install required NPM packages
    ```sh
-   npm install express jasmine jasmine-spec-reporter multer sharp supertest typescript ts-node nodemon
+   npm install express multer sharp 
    ```
 3. Run the following command to run the project in dev mode
    ```sh
